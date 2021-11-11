@@ -42,8 +42,20 @@ const getAllProducts = async (req, res) => {
   const skip = (page - 1) * limit;
   result = result.skip(skip).limit(limit);
 
+  const totalRecords = await Product.countDocuments();
+
   const products = await result;
-  res.status(200).json({ products, nbHits: products.length });
+
+  const totalPages = Math.ceil(totalRecords / limit);
+  const hasMore = page < totalPages;
+  res.status(200).json({
+    products,
+    nbHits: products.length,
+    totalResults: totalRecords,
+    page,
+    totalPages,
+    hasMore,
+  });
 };
 
 module.exports = {
