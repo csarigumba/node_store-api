@@ -1,4 +1,7 @@
 require('dotenv').config();
+
+// Instead of creating a custom error handler
+// We can use this package to handle it for us.
 require('express-async-errors');
 
 const express = require('express');
